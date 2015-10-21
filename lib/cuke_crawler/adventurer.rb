@@ -1,6 +1,6 @@
 module CukeCrawler
   class Adventurer
-    class RanIntoAWallError < StandardError; end
+    class RanIntoAWallError < Error; end
 
     attr_reader :location
 

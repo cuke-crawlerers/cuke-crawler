@@ -14,5 +14,11 @@ describe CukeCrawler::Dungeon do
 
       expect(adventurer.location).to eq(dungeon.goal)
     end
+
+    it "we fail if we try to go south" do
+      expect {
+        adventurer.go_south!
+      }.to raise_error CukeCrawler::Error
+    end
   end
 end
