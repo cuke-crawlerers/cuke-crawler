@@ -24,6 +24,7 @@ GEM
     minitest (5.8.1)
     multi_json (1.11.2)
     multi_test (0.1.2)
+    pleasant-lawyer (0.4.1)
     rspec (3.3.0)
       rspec-core (~> 3.3.0)
       rspec-expectations (~> 3.3.0)
@@ -49,6 +50,7 @@ PLATFORMS
 DEPENDENCIES
   activesupport
   cucumber
+  pleasant-lawyer
   rspec
   rspec-collection_matchers
 

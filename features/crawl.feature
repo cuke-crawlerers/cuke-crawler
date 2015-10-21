@@ -4,5 +4,5 @@ Feature: A quest
   I want to go on a quest
 
   Scenario: Crawl the dungeon
-    Given I am at the dungeon entrance
+    Given I am at the entrance to the Acid Gate dungeon
     Then my quest is complete
