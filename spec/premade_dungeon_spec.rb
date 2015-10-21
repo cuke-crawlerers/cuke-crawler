@@ -7,12 +7,27 @@ describe CukeCrawler::Dungeon do
   context "with the 'phobic ice' seed" do
     let(:seed) { "phobic ice" }
 
-    it "we can complete the dungeon" do
-      expect(adventurer.location).to eq(dungeon.entrance)
+    context "when running the dungeon" do
+      before do
+        adventurer.go_north!
+      end
 
-      adventurer.go_north!
+      it "we have completed the dungeon" do
+        expect(adventurer.location).to eq(dungeon.goal)
+        expect(adventurer).to be_alive
+      end
+    end
 
-      expect(adventurer.location).to eq(dungeon.goal)
+    context "when going around in circles" do
+      before do
+        adventurer.go_north!
+        adventurer.go_south!
+      end
+
+      it "we have not completed the dungeon" do
+        expect(adventurer.location).to_not eq(dungeon.goal)
+        expect(adventurer).to be_alive
+      end
     end
 
     it "we fail if we try to go south" do

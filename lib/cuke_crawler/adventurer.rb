@@ -28,5 +28,9 @@ module CukeCrawler
       raise RanIntoAWallError if !location.east.present?
       @location = location.east
     end
+
+    def alive?
+      true
+    end
   end
 end

@@ -12,10 +12,15 @@ describe CukeCrawler::Adventurer do
     expect(adventurer.location).to eq(dungeon.entrance)
   end
 
+  it "is alive" do
+    expect(adventurer).to be_alive
+  end
+
   let(:methods) { (adventurer.methods - Object.methods).sort }
 
   it "has no other public methods" do
     expect(methods).to eq [
+      :alive?,
       :go_east!,
       :go_north!,
       :go_south!,
