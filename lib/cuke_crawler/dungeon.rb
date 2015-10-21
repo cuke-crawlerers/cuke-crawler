@@ -1,6 +1,6 @@
 require "pleasant_lawyer"
 
-module Crawler
+module CukeCrawler
   class Dungeon
     def initialize(seed)
       @random = Random.new(PleasantLawyer.convert(seed.downcase))

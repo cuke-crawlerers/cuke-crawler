@@ -1,4 +1,4 @@
-module Crawler
+module CukeCrawler
   class Adventurer
     def initialize(dungeon)
       @dungeon = dungeon

@@ -1,6 +1,6 @@
 Given(/^I am at the entrance to the (\w+ \w+) dungeon$/) do |name|
-  @dungeon = Crawler::Dungeon.generate(name)
-  @adventurer = Crawler::Adventurer.new(@dungeon)
+  @dungeon = CukeCrawler::Dungeon.generate(name)
+  @adventurer = CukeCrawler::Adventurer.new(@dungeon)
 end
 
 Then(/^my quest is complete$/) do
