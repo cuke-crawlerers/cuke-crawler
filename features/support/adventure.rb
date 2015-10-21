@@ -3,7 +3,11 @@ module CukeCrawler
     attr_reader :adventurer, :dungeon
 
     def describe_location
-      "You are in a location. There are no exits."
+      [location.description, location.exits].join(" ")
+    end
+
+    def location
+      adventurer.location
     end
   end
 end

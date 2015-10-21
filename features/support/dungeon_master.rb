@@ -6,18 +6,20 @@ class DungeonMaster
   end
 
   def step_name(keyword, step_match, status, source_indent, background, file_colon_line)
-    show_progress(step_match) if status == :passed
+    show_progress(keyword, step_match, status) unless status == :skipped
   end
 
   def exception(exception, status)
-    puts "\n" + exception.message.red
+    puts "\n" + exception.message.red + "\n"
     show_status
   end
 
   private
 
-  def show_progress(step)
-    puts step.format_args(lambda { |param| param.bold }).green
+  def show_progress(keyword, step, status)
+    colour = status == :passed ? :green : :white
+    text = keyword + step.format_args(lambda { |param| param.bold })
+    puts text.send(colour)
   end
 
   def show_status

@@ -5,5 +5,5 @@ Feature: A quest
 
   Scenario: Crawl the Acid Gate dungeon
     Given I am at the entrance to the Acid Gate dungeon
-    And I go north
+    And I go east
     Then my quest is complete
