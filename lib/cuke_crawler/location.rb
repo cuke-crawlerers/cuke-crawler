@@ -10,5 +10,9 @@ module CukeCrawler
     def connections
       [north, south, west, east].compact
     end
+
+    def description
+      "a room filled with #{@random.rand(1e3).to_i} spiders"
+    end
   end
 end

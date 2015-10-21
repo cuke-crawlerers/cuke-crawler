@@ -8,27 +8,26 @@ module CukeCrawler
       @dungeon = dungeon
       @location = dungeon.entrance
 
-      flavour_text "You enter the eerie #{dungeon.name} dungeon. It's scary and you wonder if you can make it out alive and not on fire."
+      flavour_text "You enter the eerie #{dungeon.name} dungeon.
+        It's scary and you wonder if you can make it out alive and
+        not covered with spiders."
     end
 
-    def go_north!
-      raise RanIntoAWallError if !location.north.present?
-      @location = location.north
-    end
+    ["north", "south", "west", "east"].each do |direction|
+      define_method("go_#{direction}!") do
+        raise RanIntoAWallError if !location.send(direction).present?
 
-    def go_south!
-      raise RanIntoAWallError if !location.south.present?
-      @location = location.south
-    end
+        @location = location.send(direction)
 
-    def go_west!
-      raise RanIntoAWallError if !location.west.present?
-      @location = location.west
-    end
+        flavour = ["You go #{direction}. You enter #{location.description}."]
 
-    def go_east!
-      raise RanIntoAWallError if !location.east.present?
-      @location = location.east
+        if location == @dungeon.goal
+          flavour << "You breathe in your first breath of spider-less air
+            as you return to the outside world."
+        end
+
+        flavour_text flavour.join("\n")
+      end
     end
 
     def alive?
