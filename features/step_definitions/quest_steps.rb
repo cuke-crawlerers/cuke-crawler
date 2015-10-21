@@ -4,5 +4,5 @@ Given(/^I am at the entrance to the (\w+ \w+) dungeon$/) do |name|
 end
 
 Then(/^my quest is complete$/) do
-  expect(@adventurer.location).to eq @dungeon.goal
+  expect(@adventurer.location).to eq(@dungeon.goal), "You are not at your goal"
 end
