@@ -11,6 +11,10 @@ describe CukeCrawler::Dungeon do
     expect(dungeon.goal).to_not be_nil
   end
 
+  it "has a different entrance to goal" do
+    expect(dungeon.entrance).to_not eq(dungeon.goal)
+  end
+
   let(:methods) { (dungeon.methods - Object.methods).sort }
 
   it "has no other public methods" do
