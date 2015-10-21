@@ -5,7 +5,7 @@ module CukeCrawler
   class Dungeon
     attr_reader :name
 
-    def initialize(name = PleasantLawyer.number_to_words(0))
+    def initialize(name = PleasantLawyer.number_to_words(0).join(" "))
       @name = name.titleize
       @random = Random.new(PleasantLawyer.convert(name.downcase))
       @locations = [location, location]
