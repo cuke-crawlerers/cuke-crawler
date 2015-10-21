@@ -15,6 +15,22 @@ describe CukeCrawler::Dungeon do
     expect(dungeon.entrance).to_not eq(dungeon.goal)
   end
 
+  context "the entrance" do
+    let(:location) { dungeon.entrance }
+
+    it "has connections" do
+      expect(location.connections).to_not be_empty
+    end
+  end
+
+  context "the goal" do
+    let(:location) { dungeon.goal }
+
+    it "has connections" do
+      expect(location.connections).to_not be_empty
+    end
+  end
+
   let(:methods) { (dungeon.methods - Object.methods).sort }
 
   it "has no other public methods" do

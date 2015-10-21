@@ -8,7 +8,10 @@ module CukeCrawler
     def initialize(name = PleasantLawyer.number_to_words(0).join(" "))
       @name = name.titleize
       @random = Random.new(PleasantLawyer.convert(name.downcase))
-      @locations = [location, location]
+      @locations = [new_location, new_location]
+
+      @locations.first.north = @locations.last
+      @locations.last.south = @locations.first
     end
 
     def entrance
@@ -25,7 +28,7 @@ module CukeCrawler
 
     private
 
-    def location(options = {})
+    def new_location(options = {})
       Location.new(@random.rand(LARGE_NUMBER), options)
     end
   end
