@@ -2,21 +2,27 @@ require "active_support/core_ext"
 
 module CukeCrawler
   class Location
+    AMBIENCES = ["dark", "musty", "mouldy", "silent", "chilly", "warm"]
+
     attr_reader :connections
 
-    attr_accessor :monster, :loot
+    attr_accessor :monster, :loot, :death
 
-    def initialize(seed, dungeon, options = {})
+    def initialize(seed, dungeon)
       @random = Random.new(seed)
-      @options = options
       @connections = {}
-      @spiders = @random.rand(1e3)
+      @spiders = @random.rand(1e3.to_i)
       @dungeon = dungeon
+      @ambience = @random.rand(AMBIENCES.size)
       @loot = Inventory.new
 
       if @random.rand(2) == 1
         @monster = Monster.new(seed)
       end
+    end
+
+    def to_s
+      "[#{@spiders} spiders]"
     end
 
     def add_connection(connection)
@@ -36,7 +42,11 @@ module CukeCrawler
     end
 
     def description
-      "a room filled with #{@spiders.to_i} tiny spiders"
+      if death?
+        "a deadly pit of #{@spiders} venomous spiders"
+      else
+        "a #{ambience} room filled with #{@spiders} tiny spiders"
+      end
     end
 
     def exits
@@ -56,6 +66,8 @@ module CukeCrawler
     end
 
     def location_to(direction)
+      fail "No connections in direction '#{direction}'" unless @connections[direction.to_sym].present?
+
       @connections[direction.to_sym].exits[direction.to_sym]
     end
 
@@ -64,6 +76,14 @@ module CukeCrawler
       if !monster.alive?
         @loot += monster.loot.drop_all!
       end
+    end
+
+    def death?
+      death
+    end
+
+    def ambience
+      AMBIENCES[@ambience]
     end
   end
 end

@@ -12,6 +12,7 @@ module CukeCrawler
     def go(direction)
       raise RanIntoAWallError unless @location.exit?(direction)
       @location = @location.location_to(direction)
+      @alive = false if @location.death?
     end
 
     def alive?
