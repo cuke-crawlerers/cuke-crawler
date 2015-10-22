@@ -14,5 +14,7 @@ Feature: A quest
     And I go north
     And I look around
     And I attack
+    And I look at my inventory
     And I pick up the golden cucumber
+    And I look at my inventory
     And my quest is complete

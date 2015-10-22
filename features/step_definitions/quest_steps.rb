@@ -20,6 +20,10 @@ When(/^I look around$/) do
   flavour @adventurer.location.look
 end
 
+When(/^I look (at|in|through) my inventory$/) do |_|
+  flavour @adventurer.inventory.look
+end
+
 When(/^I attack$/) do
   expect(@adventurer).to be_able_to_attack
   adventurer.attack!

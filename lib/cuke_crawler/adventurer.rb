@@ -5,7 +5,7 @@ module CukeCrawler
     def initialize(dungeon)
       @dungeon = dungeon
       @location = dungeon.entrance
-      @inventory = []
+      @inventory = Inventory.new
       @alive = true
     end
 
