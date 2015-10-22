@@ -36,7 +36,7 @@ module CukeCrawler
     end
 
     def max_line_length
-      48
+      54
     end
   end
 end

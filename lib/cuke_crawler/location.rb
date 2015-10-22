@@ -30,12 +30,12 @@ module CukeCrawler
       result << exits
       result << "There is #{monster.description} here." if monster.present?
       result << "On the ground lies #{loot.description}." if loot.present?
-      result << "You catch a breath of fresh, spider-less air from the dungeon exit." if self == @dungeon.goal
+      result << "You catch a breath of fresh air from the dungeon exit." if self == @dungeon.goal
       result.join("\n")
     end
 
     def description
-      "a room filled with #{@spiders.to_i} spiders"
+      "a room filled with #{@spiders.to_i} tiny spiders"
     end
 
     def exits
