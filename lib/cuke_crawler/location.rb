@@ -6,10 +6,10 @@ module CukeCrawler
 
     attr_accessor :monster
 
-    def initialize(seed, options = {})
+    def initialize(seed, dungeon)
       @random = Random.new(seed)
       @spiders = @random.rand(1e3)
-      @options = options
+      @dungeon = dungeon
 
       if @random.rand(2) == 1
         @monster = Monster.new(seed)
@@ -24,9 +24,8 @@ module CukeCrawler
       result = []
       result << "You are in #{description}."
       result << exits
-      if @monster.present?
-        result << "There is #{@monster.description} here."
-      end
+      result << "There is #{@monster.description} here." if @monster.present?
+      result << "You catch a breath of fresh, spider-less air from the dungeon exit." if self == @dungeon.goal
       result.join("\n")
     end
 

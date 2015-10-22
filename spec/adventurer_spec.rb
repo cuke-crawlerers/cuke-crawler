@@ -21,6 +21,7 @@ describe CukeCrawler::Adventurer do
   it "has no other public methods" do
     expect(methods).to eq [
       :alive?,
+      :attack!,
       :go_east!,
       :go_north!,
       :go_south!,
