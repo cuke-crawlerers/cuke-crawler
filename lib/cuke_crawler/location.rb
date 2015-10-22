@@ -53,12 +53,14 @@ module CukeCrawler
     end
 
     def exits
-      exits = @connections.keys
+      exits = @connections.map do |direction, connection|
+        "#{direction} to #{connection.exits[direction].name}"
+      end
 
       if exits.size > 1
-        "There are exits to the #{exits.join(" and ")}."
+        "There are exits #{exits.to_sentence}."
       elsif exits.any?
-        "There is an exit to the #{exits.first}."
+        "There is an exit #{exits.first}."
       else
         "There are no exits."
       end
@@ -91,6 +93,24 @@ module CukeCrawler
 
     def self.special?
       false
+    end
+
+    def self.factory(dungeon, klass: nil, random: nil)
+      random ||= Random.new(0)
+      seed = random.rand(LARGE_NUMBER)
+      klass ||= normal_location_types.sample(random: seed)
+      klass.new(dungeon, seed)
+    end
+
+    def self.normal_location_types
+      location_types.reject(&:special?)
+    end
+
+    def self.location_types
+      @types ||= Dir[File.join(File.dirname(__FILE__), "location/*.rb")].map do |f|
+        require f
+        const_get(File.basename(f, ".rb").camelize)
+      end.sort_by(&:name)
     end
   end
 end

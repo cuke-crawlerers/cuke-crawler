@@ -17,7 +17,7 @@ class DungeonMaster
   end
 
   def exception(exception, status)
-    puts "\n" + exception.message + "\n"
+    puts "\n" + exception.message.red + "\n"
     show_status
   end
 
@@ -36,7 +36,8 @@ class DungeonMaster
   end
 
   def show_status
-    puts "\n" + world.look
+    puts "\n"
+    CukeCrawler::Flavourful.new.print world.look
   end
 
   def world

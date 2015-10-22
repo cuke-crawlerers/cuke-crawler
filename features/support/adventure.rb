@@ -3,7 +3,7 @@ module CukeCrawler
     attr_reader :adventurer, :dungeon
 
     def look
-      [location.description, location.exits].join(" ")
+      location.look
     end
 
     def location

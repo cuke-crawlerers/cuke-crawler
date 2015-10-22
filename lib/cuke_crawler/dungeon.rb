@@ -46,7 +46,7 @@ module CukeCrawler
     private
 
     def new_location
-      Location.new(self, @random.rand(LARGE_NUMBER))
+      Location.factory(self, random: @random)
     end
 
     def generate_maze
@@ -95,7 +95,8 @@ module CukeCrawler
     end
 
     def add_entrance_to(locations)
-      locations[(height - 1) * width + (width / 2).floor] = Location::Entrance.new(self)
+      locations[(height - 1) * width + (width / 2).floor] =
+        Location.factory(self, klass: Location::Entrance)
       locations
     end
 
@@ -105,7 +106,7 @@ module CukeCrawler
         index = @random.rand(locations.length)
         break unless Location::Entrance === locations[index]
       end
-      locations[index] = Location::ThroneRoom.new(self)
+      locations[index] = Location.factory(self, klass: Location::ThroneRoom)
       locations
     end
 
@@ -131,7 +132,7 @@ module CukeCrawler
     def random_location_that_isnt(start)
       location = start
       while location == start
-        location = @locations[@random.rand(@locations.length)]
+        location = @locations.sample(random: @random)
       end
       location
     end
