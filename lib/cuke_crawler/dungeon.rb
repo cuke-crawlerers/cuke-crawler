@@ -8,10 +8,10 @@ module CukeCrawler
     def initialize(name = PleasantLawyer.number_to_words(0).join(" "))
       @name = name.titleize
       @random = Random.new(PleasantLawyer.convert(name.downcase))
-      @locations = [new_location, new_location]
+      @locations = [new_location, new_location, new_location]
 
-      @locations.first.north = @locations.last
-      @locations.last.south = @locations.first
+      @locations[0].north = @locations[1]; @locations[1].south = @locations[0]
+      @locations[1].north = @locations[2]; @locations[2].south = @locations[1]
     end
 
     def entrance

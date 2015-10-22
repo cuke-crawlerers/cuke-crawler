@@ -11,12 +11,18 @@ Given(/^I am at the entrance to the (\w+ \w+) dungeon$/) do |name|
 end
 
 When(/^I go (\w+)$/) do |direction|
+  expect(adventurer).to be_able_to_leave
   expect(adventurer).to be_able_to_go(direction)
   adventurer.send("go_#{direction}!")
 end
 
 When(/^I look around$/) do
-  flavour "You are in #{@adventurer.location.description}."
+  flavour @adventurer.location.look
+end
+
+When(/^I attack$/) do
+  expect(@adventurer).to be_able_to_attack
+  adventurer.attack!
 end
 
 Then(/^my quest is complete$/) do

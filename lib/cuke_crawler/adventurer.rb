@@ -7,6 +7,7 @@ module CukeCrawler
     def initialize(dungeon)
       @dungeon = dungeon
       @location = dungeon.entrance
+      @alive = true
     end
 
     ["north", "south", "west", "east"].each do |direction|
@@ -18,7 +19,11 @@ module CukeCrawler
     end
 
     def alive?
-      true
+      @alive
+    end
+
+    def attack!
+      location.monster.be_attacked!
     end
   end
 end

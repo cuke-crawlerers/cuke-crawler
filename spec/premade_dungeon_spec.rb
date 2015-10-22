@@ -10,6 +10,7 @@ describe CukeCrawler::Dungeon do
     context "when running the dungeon" do
       before do
         adventurer.go_north!
+        adventurer.go_north!
       end
 
       it "we have completed the dungeon" do
