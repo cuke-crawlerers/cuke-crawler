@@ -16,7 +16,7 @@ When(/^I look around$/) do
   message @adventurer.location.look
 end
 
-When(/^I look (at|in|through) my inventory$/) do |_|
+When(/^I look (?:at|in|through) my inventory$/) do
   message @adventurer.inventory.look
 end
 
