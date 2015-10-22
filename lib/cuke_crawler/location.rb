@@ -4,18 +4,22 @@ module CukeCrawler
   class Location
     attr_reader :connections
 
-    attr_accessor :monster, :loot
+    attr_accessor :monster, :loot, :death
 
     def initialize(seed, dungeon, options = {})
       @random = Random.new(seed)
       @options = options
       @connections = {}
-      @spiders = @random.rand(1e3)
+      @spiders = @random.rand(1e3).to_i
       @dungeon = dungeon
 
       if @random.rand(2) == 1
         @monster = Monster.new(seed)
       end
+    end
+
+    def to_s
+      "[#{@spiders} spiders]"
     end
 
     def add_connection(connection)
@@ -35,7 +39,11 @@ module CukeCrawler
     end
 
     def description
-      "a room filled with #{@spiders.to_i} tiny spiders"
+      if death?
+        "a deadly pit of #{@spiders} venomous spiders"
+      else
+        "a room filled with #{@spiders} tiny spiders"
+      end
     end
 
     def exits
@@ -55,6 +63,8 @@ module CukeCrawler
     end
 
     def location_to(direction)
+      fail "No connections in direction '#{direction}'" unless @connections[direction.to_sym].present?
+
       @connections[direction.to_sym].exits[direction.to_sym]
     end
 
@@ -64,6 +74,10 @@ module CukeCrawler
         @loot = monster.loot
         @monster.loot = nil
       end
+    end
+
+    def death?
+      death
     end
   end
 end

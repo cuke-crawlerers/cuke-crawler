@@ -11,8 +11,10 @@ module CukeCrawler
       @options = options
       @locations = generate_maze
 
-      boss = @locations.select { |location| location.monster.present? }.first
-      boss.monster.loot = GoldenCucumber.new
+      @boss = @locations.select { |location| location.monster.present? }.first
+      @boss.monster.loot = GoldenCucumber.new
+
+      add_death
     end
 
     def entrance
@@ -86,6 +88,13 @@ module CukeCrawler
       locations
     end
 
+    def add_death
+      unnecessary_locations = @locations - critical_success_path(goal) - critical_success_path(@boss)
+      unnecessary_locations.each do |location|
+        location.death = true
+      end
+    end
+
     def width
       options[:width] || 3
     end
@@ -104,6 +113,23 @@ module CukeCrawler
         location = @locations[@random.rand(@locations.length)]
       end
       location
+    end
+
+    def critical_success_path(path_goal)
+      fail "no goal" unless path_goal.present?
+
+      100.times do
+        path = [entrance]
+        100.times do
+          directions = ["north", "south", "west", "east"].select { |d| path.last.exit?(d) }
+          index = @random.rand(directions.length)
+          direction = directions[index]
+          break if path.include?(path.last.location_to(direction))
+          path << path.last.location_to(direction)
+          return path if path.last == path_goal
+        end
+      end
+      fail "I couldn't generate any critical success paths to #{path_goal}"
     end
   end
 end
