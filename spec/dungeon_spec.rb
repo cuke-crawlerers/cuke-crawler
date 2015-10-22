@@ -35,6 +35,7 @@ describe CukeCrawler::Dungeon do
 
   it "has no other public methods" do
     expect(methods).to eq [
+      :description,
       :entrance,
       :goal,
     ]

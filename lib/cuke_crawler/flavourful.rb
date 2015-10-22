@@ -2,25 +2,22 @@ require "colorize"
 
 module CukeCrawler
   class Flavourful
-    private
 
-    def flavour_text(text)
+    def print(text)
       if !$running_from_rspec.present?
         lines = word_wrap(text)
-        print "  " + separator
+        puts "  " + separator.cyan
         lines.each do |line|
-          print "    " + line
+          puts "    " + line.cyan
         end
-        print "  " + separator
+        puts "  " + separator.cyan
       end
     end
 
+    private
+
     def separator
       " -" * ((max_line_length / 2) + 1)
-    end
-
-    def print(line)
-      puts line.cyan
     end
 
     def word_wrap(string)
