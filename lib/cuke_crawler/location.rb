@@ -1,16 +1,19 @@
+require "active_support/core_ext"
+
 module CukeCrawler
   class Location
-    DIRECTIONS = :north, :south, :west, :east
-
-    DIRECTIONS.each { |direction| attr_accessor(direction) }
+    attr_reader :connections
 
     def initialize(seed, options = {})
       @random = Random.new(seed)
       @options = options
+      @connections = {}
     end
 
-    def connections
-      [north, south, west, east].compact
+    def add_connection(connection)
+      connection.exits.each_pair do |direction, destination|
+        @connections[direction] = connection unless destination == self
+      end
     end
 
     def description
@@ -18,7 +21,7 @@ module CukeCrawler
     end
 
     def exits
-      exits = DIRECTIONS.select { |direction| exit?(direction) }
+      exits = @connections.keys
 
       if exits.size > 1
         "There are exits to the #{exits.to_sentence}."
@@ -30,7 +33,11 @@ module CukeCrawler
     end
 
     def exit?(direction)
-      send(direction).present?
+      @connections.include?(direction.to_sym)
+    end
+
+    def location_to(direction)
+      @connections[direction.to_sym].exits[direction.to_sym]
     end
   end
 end

@@ -6,7 +6,7 @@ end
 
 When(/^I go (\w+)$/) do |direction|
   expect(adventurer).to be_able_to_go(direction)
-  adventurer.send("go_#{direction}!")
+  adventurer.go(direction)
 end
 
 When(/^I examine my surroundings$/) do
@@ -14,7 +14,7 @@ When(/^I examine my surroundings$/) do
 end
 
 Then(/^my quest is complete$/) do
-  expect(@started).to eq(true), "You must begin your quest at the dungeon’s entrance"
-  expect(adventurer).to be_alive, "You are dead"
+  expect(@started).to eq(true), "You must begin your quest at the dungeon’s entrance."
+  expect(adventurer).to be_alive, "You have perished."
   expect(adventurer).to be_in_location(dungeon.goal)
 end

@@ -15,6 +15,12 @@ describe CukeCrawler::Dungeon do
     expect(dungeon.entrance).to_not eq(dungeon.goal)
   end
 
+  describe "map" do
+    subject { dungeon.map }
+
+    it { is_expected.to eq("+-+-+-+\n|     |\n+ + +-+\n| |   |\n+ + +-+\n| |   |\n+-+-+-+") }
+  end
+
   context "the entrance" do
     let(:location) { dungeon.entrance }
 
@@ -37,6 +43,8 @@ describe CukeCrawler::Dungeon do
     expect(methods).to eq [
       :entrance,
       :goal,
+      :map,
+      :options
     ]
   end
 

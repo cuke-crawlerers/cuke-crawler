@@ -7,9 +7,16 @@ describe CukeCrawler::Dungeon do
   context "with the 'phobic ice' seed" do
     let(:seed) { "phobic ice" }
 
+    it "has a map" do
+      puts "\n#{dungeon.map}\n"
+    end
+
     context "when running the dungeon" do
       before do
-        adventurer.go_north!
+        adventurer.go(:north)
+        adventurer.go(:north)
+        adventurer.go(:west)
+        adventurer.go(:south)
       end
 
       it "we have completed the dungeon" do
@@ -20,8 +27,8 @@ describe CukeCrawler::Dungeon do
 
     context "when going around in circles" do
       before do
-        adventurer.go_north!
-        adventurer.go_south!
+        adventurer.go(:north)
+        adventurer.go(:south)
       end
 
       it "we have not completed the dungeon" do
@@ -32,8 +39,8 @@ describe CukeCrawler::Dungeon do
 
     it "we fail if we try to go south" do
       expect {
-        adventurer.go_south!
-      }.to raise_error CukeCrawler::Error
+        adventurer.go(:south)
+      }.to raise_error CukeCrawler::RanIntoAWallError
     end
   end
 end
