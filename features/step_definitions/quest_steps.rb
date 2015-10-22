@@ -26,10 +26,11 @@ When(/^I attack$/) do
 end
 
 When(/^I pick up the golden cucumber$/) do
-  expect(adventurer.location.loot).to_not be_nil, "There is nothing here to pick up"
-  expect(adventurer.location.loot).to be_a_golden_cucumber
-  adventurer.inventory << adventurer.location.loot
-  adventurer.location.loot = nil
+  expect(adventurer.location.loot).not_to be_empty, "There is nothing here to pick up"
+  expect(adventurer.location.loot.first).to be_a_golden_cucumber
+  adventurer.location.loot.drop_all!.each do |item|
+    adventurer.inventory << item
+  end
 end
 
 Then(/^my quest is complete$/) do

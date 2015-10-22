@@ -9,13 +9,14 @@ module CukeCrawler
       @mood1 = @random.rand(MOOD_1.size)
       @mood2 = @random.rand(MOOD_2.size)
       @alive = true
+      @loot = Inventory.new
     end
 
     def description
       result = []
       if alive?
         result << "a gigantic spider, #{mood_description}"
-        if loot.present?
+        if loot.any?
           result << "and holding #{loot.description}"
         end
       else
