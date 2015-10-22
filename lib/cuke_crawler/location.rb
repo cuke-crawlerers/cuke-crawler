@@ -2,16 +2,18 @@ require "active_support/core_ext"
 
 module CukeCrawler
   class Location
+    AMBIENCES = ["dark", "musty", "mouldy", "silent", "chilly", "warm"]
+
     attr_reader :connections
 
     attr_accessor :monster, :loot, :death
 
-    def initialize(seed, dungeon, options = {})
+    def initialize(seed, dungeon)
       @random = Random.new(seed)
-      @options = options
       @connections = {}
-      @spiders = @random.rand(1e3).to_i
+      @spiders = @random.rand(1e3.to_i)
       @dungeon = dungeon
+      @ambience = @random.rand(AMBIENCES.size)
       @loot = Inventory.new
 
       if @random.rand(2) == 1
@@ -43,7 +45,7 @@ module CukeCrawler
       if death?
         "a deadly pit of #{@spiders} venomous spiders"
       else
-        "a room filled with #{@spiders} tiny spiders"
+        "a #{ambience} room filled with #{@spiders} tiny spiders"
       end
     end
 
@@ -78,6 +80,10 @@ module CukeCrawler
 
     def death?
       death
+    end
+
+    def ambience
+      AMBIENCES[@ambience]
     end
   end
 end
