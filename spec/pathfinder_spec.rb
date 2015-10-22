@@ -29,7 +29,7 @@ describe CukeCrawler::Pathfinder do
   describe "#route" do
     subject { pathfinder.route }
 
-    it { is_expected.to eq([:north, :north, :west, :south]) }
+    it { is_expected.to eq([:west, :north, :north, :east]) }
 
     context "when the start room has no exits" do
       before do

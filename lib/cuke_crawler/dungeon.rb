@@ -18,11 +18,15 @@ module CukeCrawler
     end
 
     def entrance
-      @entrance ||= @locations[(height - 1) * width + (width / 2).floor]
+      @entrance ||= @locations.detect do |location|
+        Location::Entrance === location
+      end
     end
 
     def goal
-      @goal ||= random_location_that_isnt(entrance)
+      @goal ||= @locations.detect do |location|
+        Location::ThroneRoom === location
+      end
     end
 
     def map
@@ -42,15 +46,17 @@ module CukeCrawler
     private
 
     def new_location
-      Location.new(@random.rand(LARGE_NUMBER), self)
+      Location.new(self, @random.rand(LARGE_NUMBER))
     end
 
     def generate_maze
       locations = coordinates.map { new_location }
-      add_exits_to(locations)
+      add_entrance_to(locations)
+      add_goal_to(locations)
+      connect(locations)
     end
 
-    def add_exits_to(locations)
+    def connect(locations)
       mapped = Set.new([[0, 0]])
 
       while mapped.size < locations.size
@@ -85,6 +91,21 @@ module CukeCrawler
         destination.add_connection(connection)
       end
 
+      locations
+    end
+
+    def add_entrance_to(locations)
+      locations[(height - 1) * width + (width / 2).floor] = Location::Entrance.new(self)
+      locations
+    end
+
+    def add_goal_to(locations)
+      index = 0
+      loop do
+        index = @random.rand(locations.length)
+        break unless Location::Entrance === locations[index]
+      end
+      locations[index] = Location::ThroneRoom.new(self)
       locations
     end
 

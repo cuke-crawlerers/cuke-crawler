@@ -24,7 +24,7 @@ class DungeonMaster
   private
 
   def format_step(step)
-    step.format_args(lambda { |param| param.bold })
+    step.format_args(lambda { |param| param.bold }).sub(/^I\s+/, "")
   end
 
   def show_progress(step)
@@ -32,7 +32,7 @@ class DungeonMaster
   end
 
   def show_command(step)
-    puts "> " + format_step(step).sub(/^I\s+/, "").red
+    puts "> " + format_step(step).red
   end
 
   def show_status

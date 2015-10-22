@@ -8,7 +8,7 @@ module CukeCrawler
 
     attr_accessor :monster, :loot, :death
 
-    def initialize(seed, dungeon)
+    def initialize(dungeon, seed = 0)
       @random = Random.new(seed)
       @connections = {}
       @spiders = @random.rand(1e3.to_i)
@@ -19,6 +19,10 @@ module CukeCrawler
       if @random.rand(2) == 1
         @monster = Monster.new(seed)
       end
+    end
+
+    def name
+      "a room"
     end
 
     def to_s
@@ -33,11 +37,10 @@ module CukeCrawler
 
     def look
       result = []
-      result << "You are in #{description}."
+      result << description
       result << exits
       result << "There is #{monster.description} here." if monster.present?
       result << "On the ground lies #{loot.description}." if loot.present?
-      result << "You catch a breath of fresh air from the dungeon exit." if self == @dungeon.goal
       result.join("\n")
     end
 
@@ -84,6 +87,10 @@ module CukeCrawler
 
     def ambience
       AMBIENCES[@ambience]
+    end
+
+    def self.special?
+      false
     end
   end
 end

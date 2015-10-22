@@ -13,10 +13,10 @@ describe CukeCrawler::Dungeon do
 
     context "when running the dungeon" do
       before do
-        adventurer.go(:north)
-        adventurer.go(:north)
         adventurer.go(:west)
-        adventurer.go(:south)
+        adventurer.go(:north)
+        adventurer.go(:north)
+        adventurer.go(:east)
       end
 
       it "we have completed the dungeon" do
@@ -27,12 +27,12 @@ describe CukeCrawler::Dungeon do
 
     context "when going around in circles" do
       before do
-        adventurer.go(:north)
-        adventurer.go(:south)
+        adventurer.go(:west)
+        adventurer.go(:east)
       end
 
       it "we have not completed the dungeon" do
-        expect(adventurer.location).to_not eq(dungeon.goal)
+        expect(adventurer.location).not_to eq(dungeon.goal)
         expect(adventurer).to be_alive
       end
     end
