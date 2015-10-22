@@ -15,7 +15,7 @@ module CukeCrawler
     end
 
     def description
-      items.map(&:description).to_sentence
+      map(&:description).to_sentence
     end
 
     def +(another)
