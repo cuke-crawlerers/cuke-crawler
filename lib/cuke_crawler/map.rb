@@ -41,6 +41,7 @@ module CukeCrawler
       case at(x, y)
       when @options[:entrance] then "*"
       when @options[:goal]     then "!"
+      when Location::Trap      then "X"
       else " "
       end
     end

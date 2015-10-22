@@ -18,7 +18,7 @@ describe CukeCrawler::Dungeon do
   describe "map" do
     subject { dungeon.map }
 
-    it { is_expected.to eq("+-+-+-+\n|     |\n+ +-+ +\n|!  | |\n+ + +-+\n| |*  |\n+-+-+-+") }
+    it { is_expected.to eq("+-+-+-+\n|     |\n+ +-+ +\n|!  | |\n+ + +-+\n| |* X|\n+-+-+-+") }
   end
 
   context "the entrance" do
