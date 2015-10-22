@@ -10,6 +10,9 @@ module CukeCrawler
       @random = Random.new(PleasantLawyer.convert(@name.downcase))
       @options = options
       @locations = generate_maze
+
+      boss = @locations.select { |location| location.monster.present? }.first
+      boss.monster.loot = GoldenCucumber.new
     end
 
     def entrance
@@ -28,10 +31,16 @@ module CukeCrawler
       self.new(seed)
     end
 
+    def description
+      "the eerie #{name} dungeon.
+        It's scary and you wonder if you can make it out alive
+        and not covered with spiders"
+    end
+
     private
 
-    def new_location(options = {})
-      Location.new(@random.rand(LARGE_NUMBER), options)
+    def new_location
+      Location.new(@random.rand(LARGE_NUMBER), self)
     end
 
     def generate_maze

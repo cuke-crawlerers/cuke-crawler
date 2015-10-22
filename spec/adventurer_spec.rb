@@ -19,9 +19,11 @@ describe CukeCrawler::Adventurer do
   let(:methods) { (adventurer.methods - Object.methods).sort }
 
   it "has no other public methods" do
-    expect(methods).to eq [
+    expect(methods).to match_array [
       :alive?,
       :go,
+      :attack!,
+      :inventory,
       :location,
     ]
   end

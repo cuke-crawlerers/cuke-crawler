@@ -1,12 +1,12 @@
 module CukeCrawler
-  class Adventurer < Flavourful
-    attr_reader :location
+  class Adventurer
+    attr_reader :location, :inventory
 
     def initialize(dungeon)
       @dungeon = dungeon
       @location = dungeon.entrance
-
-      flavour_text "You enter the eerie #{dungeon.name} dungeon. It's scary and you wonder if you can make it out alive and not on fire."
+      @inventory = []
+      @alive = true
     end
 
     def go(direction)
@@ -15,7 +15,11 @@ module CukeCrawler
     end
 
     def alive?
-      true
+      @alive
+    end
+
+    def attack!
+      location.be_attacked!
     end
   end
 end
