@@ -5,7 +5,11 @@ class DungeonMaster
     @runtime = runtime
   end
 
-  def step_name(keyword, step_match, status, source_indent, background, file_colon_line)
+  def after_step(step)
+    world.flush_messages
+  end
+
+  def before_step_result(keyword, step_match, multiline_arg, status, exception, source_indent, background, file_colon_line)
     case status
     when :passed then show_progress(step_match)
     when :failed then show_command(step_match)
@@ -24,12 +28,11 @@ class DungeonMaster
   end
 
   def show_progress(step)
-    puts format_step(step).green
+    puts "> " + format_step(step).green
   end
 
   def show_command(step)
-    text = "> " + format_step(step).sub(/^I\s+/, "")
-    puts text.red
+    puts "> " + format_step(step).sub(/^I\s+/, "").red
   end
 
   def show_status

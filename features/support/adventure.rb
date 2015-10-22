@@ -9,6 +9,21 @@ module CukeCrawler
     def location
       adventurer.location
     end
+
+    def flavour(text)
+      CukeCrawler::Flavourful.new.print text
+    end
+
+    def message(message)
+      (@messages ||= []) << message
+    end
+
+    def flush_messages
+      (@messages || []).each do |message|
+        CukeCrawler::Flavourful.new.print message
+      end
+      @messages = []
+    end
   end
 end
 

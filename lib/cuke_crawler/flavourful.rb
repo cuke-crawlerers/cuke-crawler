@@ -5,20 +5,11 @@ module CukeCrawler
 
     def print(text)
       if !$running_from_rspec.present?
-        lines = word_wrap(text)
-        puts "  " + separator.cyan
-        lines.each do |line|
-          puts "    " + line.cyan
-        end
-        puts "  " + separator.cyan
+        word_wrap(text).each { |line| puts line.cyan }
       end
     end
 
     private
-
-    def separator
-      " -" * ((max_line_length / 2) + 1)
-    end
 
     def word_wrap(string)
       words = string.split("\s")
