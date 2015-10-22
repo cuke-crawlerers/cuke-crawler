@@ -16,6 +16,10 @@ When(/^I look around$/) do
   message @adventurer.location.look
 end
 
+When(/^I look (at|in|through) my inventory$/) do |_|
+  message @adventurer.inventory.look
+end
+
 When(/^I attack$/) do
   expect(@adventurer).to be_able_to_attack
   adventurer.attack!
