@@ -20,7 +20,7 @@ When(/^I look around$/) do
 end
 
 Then(/^my quest is complete$/) do
-  expect(@started).to eq(true), "You never started at the entrance"
+  expect(@started).to eq(true), "You must begin your quest at the dungeon entrance"
   expect(adventurer).to be_alive, "You are dead"
   expect(adventurer).to be_in_location(dungeon.goal)
 end

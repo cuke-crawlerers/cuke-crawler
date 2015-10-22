@@ -10,20 +10,20 @@ class DungeonMaster
   end
 
   def exception(exception, status)
-    puts "\n" + exception.message.red + "\n"
+    puts "\n" + exception.message + "\n"
     show_status
   end
 
   private
 
   def show_progress(keyword, step, status)
-    colour = status == :passed ? :green : :white
+    colour = status == :passed ? :green : :red
     text = keyword + step.format_args(lambda { |param| param.bold })
     puts text.send(colour)
   end
 
   def show_status
-    puts "\n" + world.describe_location
+    puts "\n" + world.look
   end
 
   def world
