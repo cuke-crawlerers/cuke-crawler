@@ -7,6 +7,8 @@ Feature: A quest
     Given I am at the entrance to the Acid Gate dungeon
     And I look around
     When I pick up the sword
+    And I pick up the gemstones
+    And I check my inventory
     And I attack
     And I go north
     And I look around

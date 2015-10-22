@@ -1,6 +1,9 @@
 module CukeCrawler
   class Loot
     class GoldenCucumber < Treasure
+      def initialize
+      end
+
       def description
         "a magnificent golden cucumber"
       end

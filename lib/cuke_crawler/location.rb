@@ -15,9 +15,9 @@ module CukeCrawler
       @ambience = @random.rand(AMBIENCES.size)
       @loot = Inventory.new
 
-      if @random.rand(2) == 1
-        @monster = Monster.new(seed)
-      end
+      @monster = Monster.new(seed) if chance(0.5)
+
+      @loot << Loot::Treasure.new(@random.rand(LARGE_NUMBER)) if chance(0.5)
     end
 
     def name
@@ -103,6 +103,12 @@ module CukeCrawler
 
     def self.normal_location_types
       subtypes.reject(&:special?)
+    end
+
+    private
+
+    def chance(chance)
+      @random.rand < chance
     end
   end
 end
