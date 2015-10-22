@@ -1,4 +1,5 @@
 require "rspec"
+require "rspec/collection_matchers"
 require "active_support"
 require "active_support/dependencies"
 
