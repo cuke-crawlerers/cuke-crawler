@@ -10,16 +10,13 @@ Feature: A quest
     And I attack
     And I go north
     And I look around
-    And I attack
-    And I go north
+    And I go east
     And I look around
     And I attack
+    And I go south
+    And I look around
     And I go west
     And I look around
     And I attack
     And I pick up the golden cucumber
-    And I go east
-    And I look around
-    And I go south
-    And I look around
     Then my quest is complete

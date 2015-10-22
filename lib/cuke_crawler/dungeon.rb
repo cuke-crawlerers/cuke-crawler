@@ -45,12 +45,15 @@ module CukeCrawler
 
     private
 
-    def new_location
-      Location.factory(self, random: @random)
+    def new_location(types)
+      Location.factory(self, random: @random, from: types).tap do |location|
+        types.delete(location.class)
+      end
     end
 
     def generate_maze
-      locations = coordinates.map { new_location }
+      location_types = Location.normal_location_types.dup
+      locations = coordinates.map { new_location(location_types) }
       add_entrance_to(locations)
       add_goal_to(locations)
       connect(locations)
@@ -112,8 +115,21 @@ module CukeCrawler
 
     def add_death
       unnecessary_locations = @locations - critical_success_path(goal) - critical_success_path(@boss)
-      unnecessary_locations.each do |location|
-        location.death = true
+
+      replace_location(
+        unnecessary_locations.sample(random: @random),
+        Location.factory(self, klass: Location::Trap)
+      )
+    end
+
+    def replace_location(location, another)
+      connections = location.connections
+      @locations[@locations.index(location)] = another
+      connections.each_pair do |direction, connection|
+        connected = connection.exits[direction]
+        opposite = Connection.opposite(direction)
+        another.connections[direction] = connection
+        connection.exits[opposite] = another
       end
     end
 

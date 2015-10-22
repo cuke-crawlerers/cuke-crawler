@@ -7,16 +7,15 @@ describe CukeCrawler::Dungeon do
   context "with the 'phobic ice' seed" do
     let(:seed) { "phobic ice" }
 
-    it "has a map" do
+    it "looks like the map" do
       puts "\n#{dungeon.map}\n"
+      expect(dungeon.map).to eq("+-+-+-+\n|     |\n+ +-+ +\n|!  | |\n+ + +-+\n| |*  |\n+-+-+-+")
     end
 
     context "when running the dungeon" do
       before do
+        adventurer.go(:north)
         adventurer.go(:west)
-        adventurer.go(:north)
-        adventurer.go(:north)
-        adventurer.go(:east)
       end
 
       it "we have completed the dungeon" do
@@ -27,8 +26,8 @@ describe CukeCrawler::Dungeon do
 
     context "when going around in circles" do
       before do
-        adventurer.go(:west)
-        adventurer.go(:east)
+        adventurer.go(:north)
+        adventurer.go(:south)
       end
 
       it "we have not completed the dungeon" do

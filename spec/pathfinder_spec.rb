@@ -15,7 +15,7 @@ describe CukeCrawler::Pathfinder do
     subject { path }
 
     it { is_expected.not_to be false }
-    it { is_expected.to have_exactly(5).items }
+    it { is_expected.to have_exactly(3).items }
 
     context "when the start room has no exits" do
       before do
@@ -29,7 +29,7 @@ describe CukeCrawler::Pathfinder do
   describe "#route" do
     subject { pathfinder.route }
 
-    it { is_expected.to eq([:west, :north, :north, :east]) }
+    it { is_expected.to eq([:north, :west]) }
 
     context "when the start room has no exits" do
       before do

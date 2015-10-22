@@ -1,17 +1,16 @@
 require "active_support/core_ext"
 
 module CukeCrawler
-  class Location
+  class Location < Variety
     AMBIENCES = ["dark", "musty", "mouldy", "silent", "chilly", "warm"]
 
     attr_reader :connections
 
-    attr_accessor :monster, :loot, :death
+    attr_accessor :monster, :loot
 
     def initialize(dungeon, seed = 0)
       @random = Random.new(seed)
       @connections = {}
-      @spiders = @random.rand(1e3.to_i)
       @dungeon = dungeon
       @ambience = @random.rand(AMBIENCES.size)
       @loot = Inventory.new
@@ -26,7 +25,7 @@ module CukeCrawler
     end
 
     def to_s
-      "[#{@spiders} spiders]"
+      name
     end
 
     def add_connection(connection)
@@ -46,9 +45,9 @@ module CukeCrawler
 
     def description
       if death?
-        "a deadly pit of #{@spiders} venomous spiders"
+        "a deadly pit of venomous spiders"
       else
-        "a #{ambience} room filled with #{@spiders} tiny spiders"
+        "a #{ambience} room"
       end
     end
 
@@ -83,8 +82,8 @@ module CukeCrawler
       end
     end
 
-    def death?
-      death
+    def deadly?
+      false
     end
 
     def ambience
@@ -95,22 +94,15 @@ module CukeCrawler
       false
     end
 
-    def self.factory(dungeon, klass: nil, random: nil)
+    def self.factory(dungeon, klass: nil, random: nil, from: normal_location_types)
       random ||= Random.new(0)
       seed = random.rand(LARGE_NUMBER)
-      klass ||= normal_location_types.sample(random: seed)
+      klass ||= from.sample(random: random)
       klass.new(dungeon, seed)
     end
 
     def self.normal_location_types
-      location_types.reject(&:special?)
-    end
-
-    def self.location_types
-      @types ||= Dir[File.join(File.dirname(__FILE__), "location/*.rb")].map do |f|
-        require f
-        const_get(File.basename(f, ".rb").camelize)
-      end.sort_by(&:name)
+      subtypes.reject(&:special?)
     end
   end
 end
