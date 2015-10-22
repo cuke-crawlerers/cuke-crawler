@@ -7,7 +7,7 @@ Given(/^I am at the entrance to the (\w+ \w+) dungeon$/) do |name|
   @adventurer = CukeCrawler::Adventurer.new(@dungeon)
   @started = true
 
-  flavour @dungeon.description
+  flavour "You enter #{@dungeon.description}."
 end
 
 When(/^I go (\w+)$/) do |direction|

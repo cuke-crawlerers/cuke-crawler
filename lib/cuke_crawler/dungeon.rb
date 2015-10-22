@@ -27,7 +27,7 @@ module CukeCrawler
     end
 
     def description
-      "You enter the eerie #{name} dungeon.
+      "the eerie #{name} dungeon.
         It's scary and you wonder if you can make it out alive
         and not covered with spiders."
     end
