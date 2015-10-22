@@ -30,7 +30,7 @@ When(/^I attack$/) do
   adventurer.attack!
 end
 
-When(/^I pick up (?:a|the) (.*)$/) do |item|
+When(/^I (?:pick up|take|get) (?:a|the) (.*)$/) do |item|
   expect(adventurer).to be_alive, "You are dead."
   object = adventurer.location.loot.detect do |candidate|
     item =~ Regexp.new(candidate.name, "i")

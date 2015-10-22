@@ -1,5 +1,10 @@
 module CukeCrawler
   class Location::Armoury < Location
+    def initialize(*args)
+      super(*args)
+      loot << Loot::Axe.new
+    end
+
     def name
       "an armoury"
     end
