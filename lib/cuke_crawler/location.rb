@@ -12,6 +12,7 @@ module CukeCrawler
       @connections = {}
       @spiders = @random.rand(1e3).to_i
       @dungeon = dungeon
+      @loot = Inventory.new
 
       if @random.rand(2) == 1
         @monster = Monster.new(seed)
@@ -71,8 +72,7 @@ module CukeCrawler
     def be_attacked!
       monster.be_attacked!
       if !monster.alive?
-        @loot = monster.loot
-        @monster.loot = nil
+        @loot += monster.loot.drop_all!
       end
     end
 

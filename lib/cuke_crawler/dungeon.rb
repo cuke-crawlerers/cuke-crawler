@@ -12,7 +12,7 @@ module CukeCrawler
       @locations = generate_maze
 
       @boss = @locations.select { |location| location.monster.present? }.first
-      @boss.monster.loot = GoldenCucumber.new
+      @boss.monster.loot << GoldenCucumber.new
 
       add_death
     end
