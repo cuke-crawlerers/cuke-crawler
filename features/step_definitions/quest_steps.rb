@@ -35,6 +35,7 @@ end
 Then(/^my quest is complete$/) do
   expect(@started).to eq(true), "You must begin your quest at the dungeon's entrance."
   expect(adventurer).to be_alive, "You have perished."
-  expect(adventurer).to be_in_possession_of_a_golden_cucumber
   expect(adventurer).to be_in_location(dungeon.goal)
+  expect(adventurer).to be_in_possession_of_a_golden_cucumber
+  flavour "You are indeed a mighty hero."
 end

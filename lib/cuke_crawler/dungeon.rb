@@ -49,9 +49,9 @@ module CukeCrawler
     end
 
     def add_exits_to(locations)
-      mapped = [[0, 0]]
+      mapped = Set.new([[0, 0]])
 
-      while mapped.length < locations.length
+      while mapped.size < locations.size
         candidates = mapped.each.with_object([]) do |(x, y), walls|
           walls << [x, y, :north] if y > 1 && !mapped.include?([x, y - 1])
           walls << [x, y, :south] if y < height - 1 && !mapped.include?([x, y + 1])
