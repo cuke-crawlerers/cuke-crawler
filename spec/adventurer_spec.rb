@@ -26,6 +26,7 @@ describe CukeCrawler::Adventurer do
       :go_north!,
       :go_south!,
       :go_west!,
+      :inventory,
       :location,
     ]
   end

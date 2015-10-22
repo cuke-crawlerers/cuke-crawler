@@ -8,6 +8,8 @@ Feature: A quest
     And I look around
     And I attack
     And I look around
+    And I pick up the golden cucumber
+    And I look around
     And I go north
     And I look around
     And I attack

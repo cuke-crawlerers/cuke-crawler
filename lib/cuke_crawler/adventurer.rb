@@ -2,11 +2,12 @@ module CukeCrawler
   class Adventurer
     class RanIntoAWallError < Error; end
 
-    attr_reader :location
+    attr_reader :location, :inventory
 
     def initialize(dungeon)
       @dungeon = dungeon
       @location = dungeon.entrance
+      @inventory = []
       @alive = true
     end
 
@@ -23,7 +24,7 @@ module CukeCrawler
     end
 
     def attack!
-      location.monster.be_attacked!
+      location.be_attacked!
     end
   end
 end

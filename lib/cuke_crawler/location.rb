@@ -4,7 +4,7 @@ module CukeCrawler
 
     DIRECTIONS.each { |direction| attr_accessor(direction) }
 
-    attr_accessor :monster
+    attr_accessor :monster, :loot
 
     def initialize(seed, dungeon)
       @random = Random.new(seed)
@@ -24,7 +24,8 @@ module CukeCrawler
       result = []
       result << "You are in #{description}."
       result << exits
-      result << "There is #{@monster.description} here." if @monster.present?
+      result << "There is #{monster.description} here." if monster.present?
+      result << "On the ground lies #{loot.description}." if loot.present?
       result << "You catch a breath of fresh, spider-less air from the dungeon exit." if self == @dungeon.goal
       result.join("\n")
     end
@@ -47,6 +48,14 @@ module CukeCrawler
 
     def exit?(direction)
       send(direction).present?
+    end
+
+    def be_attacked!
+      monster.be_attacked!
+      if !monster.alive?
+        @loot = monster.loot
+        @monster.loot = nil
+      end
     end
   end
 end
