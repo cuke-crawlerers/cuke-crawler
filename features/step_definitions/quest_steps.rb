@@ -21,22 +21,25 @@ When(/^I look (?:at|in|through) my inventory$/) do
 end
 
 When(/^I attack$/) do
+  expect(@adventurer).to be_carrying(CukeCrawler::Loot::Weapon),
+    "You can't fight with your bare hands!"
   expect(@adventurer).to be_able_to_attack
   adventurer.attack!
 end
 
-When(/^I pick up the golden cucumber$/) do
-  expect(adventurer.location.loot).not_to be_empty, "There is nothing here to pick up"
-  expect(adventurer.location.loot.first).to be_a_golden_cucumber
-  adventurer.location.loot.drop_all!.each do |item|
-    adventurer.inventory << item
+When(/^I pick up (?:a|the) (.*)$/) do |item|
+  object = adventurer.location.loot.detect do |candidate|
+    item =~ Regexp.new(candidate.name, "i")
   end
+
+  expect(object).to be_present, "You can't see that here."
+  adventurer.inventory << location.loot.drop(object)
 end
 
 Then(/^my quest is complete$/) do
   expect(@started).to eq(true), "You must begin your quest at the dungeon's entrance."
   expect(adventurer).to be_alive, "You have perished."
   expect(adventurer).to be_in_location(dungeon.goal)
-  expect(adventurer).to be_in_possession_of_a_golden_cucumber
+  expect(adventurer).to be_carrying(CukeCrawler::Loot::GoldenCucumber)
   message "You are indeed a mighty hero."
 end

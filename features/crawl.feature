@@ -5,7 +5,9 @@ Feature: A quest
 
   Scenario: Crawl the dungeon
     Given I am at the entrance to the Acid Gate dungeon
-    When I attack
+    When I pick up the sword
+    And I look at my inventory
+    And I attack
     And I go west
     And I attack
     And I look around

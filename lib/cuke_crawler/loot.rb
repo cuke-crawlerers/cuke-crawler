@@ -1,7 +1,11 @@
 module CukeCrawler
   class Loot
-    def golden_cucumber?
-      false
+    def description
+      "a mysterious object"
+    end
+
+    def name
+      "item"
     end
   end
 end
