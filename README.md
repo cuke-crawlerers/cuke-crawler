@@ -6,7 +6,7 @@
 
 Create a new `.feature` in `features/`, and run with `cucumber --format DungeonMaster`:
 
-```
+```cucumber
 Feature: A quest
   As a mighty hero
   In order to win fame and glory
