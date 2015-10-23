@@ -8,7 +8,7 @@ module CukeCrawler
       "You are at the bottom of a " + "deep pit".bold_words + ". There are spikes everywhere, including through your liver, your left thigh, and one of your lungs. Probably should have paid more attention."
     end
 
-    def deadly?
+    def self.deadly?
       true
     end
 

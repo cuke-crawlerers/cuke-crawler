@@ -146,7 +146,7 @@ module CukeCrawler
     TRAPS = [Location::Trap, Location::Volcano]
 
     def random_trap
-      TRAPS[@random.rand(TRAPS.length) + 1]
+      TRAPS[@random.rand(TRAPS.length)]
     end
 
     def replace_location(location, another)

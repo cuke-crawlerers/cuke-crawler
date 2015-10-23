@@ -8,7 +8,7 @@ module CukeCrawler
       "You are rapidly sinking through a smouldering #{"volcano".bold_words}. The warm magma is both soothing and deadly as it seeps through your skin. Probably should have paid more attention."
     end
 
-    def deadly?
+    def self.deadly?
       true
     end
 

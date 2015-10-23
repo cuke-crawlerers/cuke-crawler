@@ -78,8 +78,12 @@ module CukeCrawler
       @connections[direction.to_sym].exits[direction.to_sym]
     end
 
-    def deadly?
+    def self.deadly?
       false
+    end
+
+    def deadly?
+      self.class.deadly?
     end
 
     def ambience
