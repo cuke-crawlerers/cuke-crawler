@@ -22,21 +22,25 @@ When(/^I (?:check|look (?:at|in|through)) my inventory$/) do
   message(adventurer.inventory.look)
 end
 
-When(/^I attack$/) do
+When(/^I attack the (.*)$/) do |monster|
+  monster = location.monsters.detect do |candidate|
+    monster =~ Regexp.new(candidate.name, "i")
+  end
+  expect(monster).to be_present, "You can't see that here."
   expect(adventurer).to be_carrying(CukeCrawler::Loot::Weapon),
     "You can't fight with your bare hands!"
   expect(adventurer).to be_alive, "You are dead."
   expect(adventurer).to be_able_to_attack
-  adventurer.attack!
+  adventurer.attack!(monster)
 end
 
 When(/^I (?:pick up|take|get) (?:a|the) (.*)$/) do |item|
   expect(adventurer).to be_alive, "You are dead."
-  object = adventurer.location.loot.detect do |candidate|
+  item = adventurer.location.loot.detect do |candidate|
     item =~ Regexp.new(candidate.name, "i")
   end
-  expect(object).to be_present, "You can't see that here."
-  adventurer.inventory << location.loot.drop(object)
+  expect(item).to be_present, "You can't see that here."
+  adventurer.inventory << location.loot.drop(item)
 end
 
 Then(/^my quest is complete$/) do
@@ -44,5 +48,6 @@ Then(/^my quest is complete$/) do
   expect(@started).to eq(true), "You must begin your quest at the dungeon's entrance."
   expect(adventurer).to be_in_location(dungeon.goal)
   expect(adventurer).to be_carrying(CukeCrawler::Loot::GoldenCucumber)
-  message "You are indeed a mighty hero."
+  expect(location.monsters.select(&:alive?)).to be_empty, "There are still adversaries to be defeated."
+  message "A shaft of light from somewhere overhead glints brightly off the magnificent golden cucumber as you hold it aloft in triumph. Your quest is at an end, and turned out to involve hardly any spiders."
 end

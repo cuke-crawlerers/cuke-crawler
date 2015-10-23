@@ -18,7 +18,7 @@ describe CukeCrawler::Dungeon do
   describe "map" do
     subject { dungeon.map }
 
-    it { is_expected.to eq("+-+-+-+\n|     |\n+ +-+ +\n|!  | |\n+ + +-+\n| |* X|\n+-+-+-+") }
+    it { is_expected.to eq("+-+-+-+\n|     |\n+ +-+ +\n|!  | |\n+ + +-+\n|X|*  |\n+-+-+-+") }
   end
 
   context "the entrance" do
@@ -40,12 +40,13 @@ describe CukeCrawler::Dungeon do
   let(:methods) { (dungeon.methods - Object.methods).sort }
 
   it "has no other public methods" do
-    expect(methods).to eq [
+    expect(methods).to match_array [
       :description,
       :entrance,
       :goal,
       :map,
-      :options
+      :options,
+      :monsters
     ]
   end
 

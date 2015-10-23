@@ -6,18 +6,15 @@ module CukeCrawler
 
     attr_reader :connections
 
-    attr_accessor :monster, :loot
+    attr_accessor :loot
 
     def initialize(dungeon, seed = 0)
-      @random = Random.new(seed)
+      super
       @connections = {}
-      @dungeon = dungeon
       @ambience = @random.rand(AMBIENCES.size)
       @loot = Inventory.new
 
-      @monster = Monster.new(seed) if chance(0.5)
-
-      @loot << Loot::Treasure.new(@random.rand(LARGE_NUMBER)) if chance(0.5)
+      @loot << Loot.factory(self, klass: Loot::Treasure, random: @random) if chance(0.5)
     end
 
     def name
@@ -38,9 +35,17 @@ module CukeCrawler
       result = []
       result << description
       result << exits
-      result << "There is #{monster.description} here." if monster.present?
+      result += monsters.map { |monster| "There is #{monster.description} here." }
       result << "On the ground lies #{loot.description}." if loot.present?
       result.join("\n")
+    end
+
+    def monsters
+      dungeon.monsters.select { |monster| monster.location == self }
+    end
+
+    def monster
+      monsters.first
     end
 
     def description
@@ -75,13 +80,6 @@ module CukeCrawler
       @connections[direction.to_sym].exits[direction.to_sym]
     end
 
-    def be_attacked!
-      monster.be_attacked!
-      if !monster.alive?
-        @loot += monster.loot.drop_all!
-      end
-    end
-
     def deadly?
       false
     end
@@ -95,10 +93,7 @@ module CukeCrawler
     end
 
     def self.factory(dungeon, klass: nil, random: nil, from: normal_location_types)
-      random ||= Random.new(0)
-      seed = random.rand(LARGE_NUMBER)
-      klass ||= from.sample(random: random)
-      klass.new(dungeon, seed)
+      super
     end
 
     def self.normal_location_types

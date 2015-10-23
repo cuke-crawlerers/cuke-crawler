@@ -2,7 +2,7 @@ module CukeCrawler
   class Location::Armoury < Location
     def initialize(*args)
       super(*args)
-      loot << Loot::Axe.new
+      loot << Loot::Axe.new(@dungeon)
     end
 
     def name

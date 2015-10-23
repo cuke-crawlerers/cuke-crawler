@@ -1,47 +1,37 @@
 module CukeCrawler
-  class Monster
+  class Monster < Variety
     class IAmAlreadyDead < Error; end
 
-    attr_accessor :loot
+    attr_accessor :loot, :location
 
-    def initialize(seed)
-      @random = Random.new(seed)
-      @mood1 = @random.rand(MOOD_1.size)
-      @mood2 = @random.rand(MOOD_2.size)
+    def initialize(dungeon, seed = 0)
+      super
       @alive = true
       @loot = Inventory.new
+      @loot << Loot.factory(@dungeon, klass: Loot::Treasure, random: @random)
     end
 
     def description
-      result = []
       if alive?
-        result << "a gigantic spider, #{mood_description}"
-        if loot.any?
-          result << "and holding #{loot.description}"
-        end
+        live_description
       else
-        result << "the corpse of a gigantic spider"
+        "the corpse of #{live_description}"
       end
-      result.join(" ")
     end
 
     def alive?
       @alive
     end
 
-    def be_attacked!
+    def kill!
       raise IAmAlreadyDead unless alive?
-
+      location.loot += loot.drop_all!
       @alive = false
+      true
     end
 
-    private
-
-    MOOD_1 = ["hissing", "meowing", "shuddering", "yelling", "contemplating"]
-    MOOD_2 = ["rapidly", "profusely", "repeatedly", "passionately", "quietly"]
-
-    def mood_description
-      MOOD_1[@mood1] + " " + MOOD_2[@mood2]
+    def carrying?(klass)
+      loot.any? { |item| klass === item }
     end
   end
 end

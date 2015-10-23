@@ -9,7 +9,7 @@ describe CukeCrawler::Dungeon do
 
     it "looks like the map" do
       puts "\n#{dungeon.map}\n"
-      expect(dungeon.map).to eq("+-+-+-+\n|     |\n+ +-+ +\n|!  | |\n+ + +-+\n| |* X|\n+-+-+-+")
+      expect(dungeon.map).to eq("+-+-+-+\n|     |\n+ +-+ +\n|!  | |\n+ + +-+\n|X|*  |\n+-+-+-+")
     end
 
     context "when running the dungeon" do

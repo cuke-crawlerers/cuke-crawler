@@ -7,18 +7,13 @@ Feature: A quest
     Given I am at the entrance to the Acid Gate dungeon
     And I look around
     When I pick up the sword
-    And I pick up the gemstones
-    And I check my inventory
-    And I attack
+    And I pick up the coloured sand
     And I go north
     And I look around
-    And I go east
+    And I attack the ghost
     And I look around
-    And I attack
-    And I go south
-    And I look around
+    And I take the cucumber
     And I go west
     And I look around
-    And I attack
-    And I pick up the golden cucumber
+    And I attack the ghost
     Then my quest is complete
