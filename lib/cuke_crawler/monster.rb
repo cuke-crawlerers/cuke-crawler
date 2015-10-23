@@ -13,7 +13,11 @@ module CukeCrawler
 
     def description
       if alive?
-        live_description
+        if @loot.any?
+          "#{live_description} holding onto some #{"loot".bold_words}"
+        else
+          live_description
+        end
       else
         "the corpse of #{live_description}"
       end
