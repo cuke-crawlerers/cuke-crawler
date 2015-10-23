@@ -12,7 +12,7 @@ Feature: A quest
     And I look around
     And I attack the ghost
     And I look around
-    And I take the cucumber
+    And I take everything
     And I go west
     And I look around
     And I attack the ghost

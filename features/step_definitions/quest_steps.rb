@@ -41,6 +41,12 @@ When(/^I (?:pick up|take|get) (?:a|the) (.*)$/) do |item|
   end
   expect(item).to be_present, "You can't see that here."
   adventurer.inventory << location.loot.drop(item)
+  message "You pick up the #{item.name}."
+end
+
+When(/^I (?:pick up|take|get) everything$/) do
+  expect(location.loot).not_to be_empty, "There's nothing worth taking."
+  location.loot.dup.each { |item| step("I take the #{item.name}") }
 end
 
 Then(/^my quest is complete$/) do

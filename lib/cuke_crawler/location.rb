@@ -58,7 +58,7 @@ module CukeCrawler
 
     def exits
       exits = @connections.map do |direction, connection|
-        "#{direction} to #{connection.exits[direction].name}"
+        "#{direction} #{connection.view(direction)}"
       end
 
       if exits.size > 1

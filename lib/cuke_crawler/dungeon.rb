@@ -11,10 +11,11 @@ module CukeCrawler
       @options = options
       @locations = generate_maze
 
-      add_monsters
-
       entrance.loot << Loot::Sword.new(@dungeon)
+
+      add_monsters
       add_traps
+      hide_key
     end
 
     def entrance
@@ -75,21 +76,19 @@ module CukeCrawler
         connection = false
         if direction == :north
           destination = locations[(y - 1) * width + x]
-          connection = Connection.new(north: destination, south: origin)
           mapped << [x, y - 1]
         elsif direction == :south
           destination = locations[(y + 1) * width + x]
-          connection = Connection.new(south: destination, north: origin)
           mapped << [x, y + 1]
         elsif direction == :west
           destination = locations[y * width + x - 1]
-          connection = Connection.new(west: destination, east: origin)
           mapped << [x - 1, y]
         elsif direction == :east
           destination = locations[y * width + x + 1]
-          connection = Connection.new(east: destination, west: origin)
           mapped << [x + 1, y]
         end
+        klass = (Location::ThroneRoom === destination || Location::ThroneRoom === origin) ? Door : Connection
+        connection = klass.new(direction => destination, Connection.opposite(direction) => origin)
         origin.add_connection(connection)
         destination.add_connection(connection)
       end
@@ -140,6 +139,16 @@ module CukeCrawler
         unnecessary_locations.sample(random: @random),
         Location.factory(self, klass: Location::Trap)
       )
+    end
+
+    def hide_key
+      paths = @locations.reject(&:deadly?).map do |location|
+        Pathfinder.new(location) { |room| Location::Entrance === room }
+          .path(false)
+      end
+      paths = (paths - [false]).sort_by(&:length).reverse
+      location = paths.first.first
+      (location.monsters.first || location).loot << Loot::Key.new(self)
     end
 
     def replace_location(location, another)

@@ -5,17 +5,15 @@ module CukeCrawler
       @goal = goal_proc
     end
 
-    def path
-      path_from(@start).first
+    def path(ignore_doors = true)
+      path_from(@start, ignore_doors).first
     end
 
-    def route
-      path_from(@start).last
+    def route(ignore_doors = true)
+      path_from(@start, ignore_doors).last
     end
 
-    private
-
-    def path_from(start)
+    def path_from(start, ignore_doors = true)
       stack = [[start, [], []]]
 
       while !stack.empty?
@@ -24,7 +22,7 @@ module CukeCrawler
         return [history, directions] if @goal.call(location)
         location.connections.each_pair do |direction, connection|
           destination = connection.exits[direction]
-          stack << [destination, history.dup, directions + [direction]] unless history.include?(destination)
+          stack << [destination, history.dup, directions + [direction]] if !destination.deadly? && (connection.open? || ignore_doors) && !history.include?(destination)
         end
       end
 

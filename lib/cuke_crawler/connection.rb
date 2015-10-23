@@ -6,6 +6,18 @@ module CukeCrawler
       @exits = exits
     end
 
+    def view(direction)
+      "to " + exits[direction].name
+    end
+
+    def open?
+      true
+    end
+
+    def open_with!(inventory)
+      true
+    end
+
     def self.opposite(direction)
       case direction
       when :north then :south
