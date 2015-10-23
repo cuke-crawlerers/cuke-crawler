@@ -1,8 +1,8 @@
 module CukeCrawler
   class Loot
     class Treasure < Loot
-      def initialize(seed)
-        @random = Random.new(seed)
+      def initialize(dungeon, seed)
+        super
         @descriptor = descriptors.sample(random: @random)
         @container = containers.sample(random: @random)
         @contents = contents.sample(random: @random)

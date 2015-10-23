@@ -15,12 +15,6 @@ describe CukeCrawler::Dungeon do
     expect(dungeon.entrance).to_not eq(dungeon.goal)
   end
 
-  describe "map" do
-    subject { dungeon.map }
-
-    it { is_expected.to eq("+-+-+-+\n|     |\n+ +-+ +\n|!  | |\n+ + +-+\n| |* X|\n+-+-+-+") }
-  end
-
   context "the entrance" do
     let(:location) { dungeon.entrance }
 
@@ -40,12 +34,13 @@ describe CukeCrawler::Dungeon do
   let(:methods) { (dungeon.methods - Object.methods).sort }
 
   it "has no other public methods" do
-    expect(methods).to eq [
+    expect(methods).to match_array [
       :description,
       :entrance,
       :goal,
       :map,
-      :options
+      :options,
+      :monsters
     ]
   end
 
@@ -59,6 +54,12 @@ describe CukeCrawler::Dungeon do
 
     it "has a goal" do
       expect(dungeon.goal).to_not be_nil
+    end
+
+    describe "map" do
+      subject { dungeon.map }
+
+      it { is_expected.to eq("+-+-+-+\n|     |\n+ +-+ +\n|!  | |\n+ + +-+\n|X|*  |\n+-+-+-+") }
     end
 
     context "and must be a pleasant lawyer name" do

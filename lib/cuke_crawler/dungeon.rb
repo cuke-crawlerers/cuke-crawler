@@ -1,9 +1,10 @@
 require "pleasant_lawyer"
 require "active_support/inflector"
+require "date"
 
 module CukeCrawler
   class Dungeon
-    attr_reader :name, :options
+    attr_reader :name, :options, :monsters
 
     def initialize(name = nil, options = {})
       @name = (name || PleasantLawyer.number_to_words(todays_dungeon).join(" ")).titleize
@@ -11,10 +12,10 @@ module CukeCrawler
       @options = options
       @locations = generate_maze
 
-      @boss = @locations.select { |location| location.monster.present? }.first
-      @boss.monster.loot << Loot::GoldenCucumber.new
-      entrance.loot << Loot::Sword.new
-      add_death
+      add_monsters
+
+      entrance.loot << Loot::Sword.new(@dungeon)
+      add_traps
     end
 
     def entrance
@@ -113,8 +114,28 @@ module CukeCrawler
       locations
     end
 
-    def add_death
-      unnecessary_locations = @locations - critical_success_path(goal) - critical_success_path(@boss)
+    def add_monsters
+      locations_without_monsters = @locations - [entrance]
+
+      @monsters = (1..(@locations.size / 2)).map do
+        Monster.factory(self, random: @random).tap do |monster|
+          location = locations_without_monsters.sample(random: @random)
+          monster.location = location
+          locations_without_monsters.delete(location)
+        end
+      end
+
+      @monsters.last.location = goal unless monsters.any? { |monster| monster.location == goal }
+      @monsters.first.loot << Loot::GoldenCucumber.new
+    end
+
+    def add_traps
+      path_to_goal = Pathfinder.new(entrance) { |location| location == goal }
+      path_to_boss = Pathfinder.new(entrance) do |location|
+        location.monsters.any? { |monster| monster.carrying?(Loot::GoldenCucumber) }
+      end
+
+      unnecessary_locations = @locations - path_to_goal.path - path_to_boss.path
 
       replace_location(
         unnecessary_locations.sample(random: @random),
@@ -151,14 +172,6 @@ module CukeCrawler
         location = @locations.sample(random: @random)
       end
       location
-    end
-
-    def critical_success_path(path_goal)
-      fail("no goal") unless path_goal.present?
-
-      pathfinder = Pathfinder.new(entrance) { |location| location == path_goal }
-
-      pathfinder.path || fail("I couldn't generate any critical success paths to #{path_goal}")
     end
 
     def todays_dungeon

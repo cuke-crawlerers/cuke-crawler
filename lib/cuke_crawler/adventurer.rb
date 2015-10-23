@@ -19,8 +19,8 @@ module CukeCrawler
       @alive
     end
 
-    def attack!
-      location.be_attacked!
+    def attack!(monster)
+      monster.kill!
     end
   end
 end
