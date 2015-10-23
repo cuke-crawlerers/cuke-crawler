@@ -5,7 +5,7 @@ module CukeCrawler
     end
 
     def live_description
-      "a menacing orc"
+      "a menacing #{name.bold_words}"
     end
   end
 end

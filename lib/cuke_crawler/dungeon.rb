@@ -1,12 +1,13 @@
 require "pleasant_lawyer"
 require "active_support/inflector"
+require "date"
 
 module CukeCrawler
   class Dungeon
     attr_reader :name, :options, :monsters
 
     def initialize(name = nil, options = {})
-      @name = (name || PleasantLawyer.number_to_words(0).join(" ")).titleize
+      @name = (name || PleasantLawyer.number_to_words(todays_dungeon).join(" ")).titleize
       @random = Random.new(PleasantLawyer.convert(@name.downcase))
       @options = options
       @locations = generate_maze
@@ -39,7 +40,7 @@ module CukeCrawler
     end
 
     def description
-      "the eerie #{name} dungeon.
+      "the eerie #{name.bold_words} dungeon.
         It's scary and you wonder if you can make it out alive
         and not covered with spiders"
     end
@@ -137,7 +138,7 @@ module CukeCrawler
 
       replace_location(
         unnecessary_locations.sample(random: @random),
-        Location.factory(self, klass: Location::Trap)
+        Location.factory(self, klass: random_trap)
       )
     end
 
@@ -149,6 +150,12 @@ module CukeCrawler
       paths = (paths - [false]).sort_by(&:length).reverse
       location = paths.first.first
       (location.monsters.first || location).loot << Loot::Key.new(self)
+    end
+
+    TRAPS = [Location::Trap, Location::Volcano]
+
+    def random_trap
+      TRAPS.sample(random: @random)
     end
 
     def replace_location(location, another)
@@ -180,6 +187,10 @@ module CukeCrawler
         location = @locations.sample(random: @random)
       end
       location
+    end
+
+    def todays_dungeon
+      (Date.today - Date.parse("2015-10-22")).to_i
     end
   end
 end

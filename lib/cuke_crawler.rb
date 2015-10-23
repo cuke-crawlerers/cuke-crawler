@@ -4,3 +4,9 @@ module CukeCrawler
   class RanIntoAWallError < Error; end
   class LockedDoorError < Error; end
 end
+
+class String
+  def bold_words
+    split(" ").map(&:bold).join(" ")
+  end
+end

@@ -5,7 +5,7 @@ module CukeCrawler
     end
 
     def description
-      "After some initial puzzlement, it occurs to you that this is probably a kitchen, although how anyone could stomach anything prepared here is beyond you."
+      "After some initial puzzlement, it occurs to you that this is probably a " + "kitchen".bold_words + ", although how anyone could stomach anything prepared here is beyond you."
     end
   end
 end

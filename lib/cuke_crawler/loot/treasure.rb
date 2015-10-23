@@ -13,7 +13,7 @@ module CukeCrawler
       end
 
       def description
-        "a #{@descriptor} #{@container} of #{@contents}"
+        "a #{@descriptor} #{@container} of #{@contents.bold_words}"
       end
 
       private

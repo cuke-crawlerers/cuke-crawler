@@ -5,7 +5,7 @@ module CukeCrawler
     end
 
     def live_description
-      "a grumpy kobold"
+      "a grumpy #{name.bold_words}"
     end
   end
 end

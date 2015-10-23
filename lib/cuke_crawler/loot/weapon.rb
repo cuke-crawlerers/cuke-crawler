@@ -2,7 +2,7 @@ module CukeCrawler
   class Loot
     class Weapon < Loot
       def description
-        "a deadly weapon"
+        "a deadly #{name.bold_words}"
       end
 
       def name

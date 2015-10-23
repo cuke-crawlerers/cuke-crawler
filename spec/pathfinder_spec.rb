@@ -7,7 +7,7 @@ describe CukeCrawler::Pathfinder do
     end
   end
 
-  let(:dungeon) { CukeCrawler::Dungeon.new }
+  let(:dungeon) { CukeCrawler::Dungeon.new("phobic ice") }
   let(:entrance) { dungeon.entrance }
   let(:path) { pathfinder.path }
 

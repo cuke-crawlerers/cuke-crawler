@@ -5,7 +5,7 @@ module CukeCrawler
     end
 
     def live_description
-      "a giant spider"
+      "a giant #{name.bold_words}"
     end
   end
 end

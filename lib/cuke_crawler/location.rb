@@ -34,9 +34,11 @@ module CukeCrawler
     def look
       result = []
       result << description
-      result << exits
-      result += monsters.map { |monster| "There is #{monster.description} here." }
-      result << "On the ground lies #{loot.description}." if loot.present?
+      if !deadly?
+        result << exits
+        result += monsters.map { |monster| "There is #{monster.description} here." }
+        result << "On the ground lies #{loot.description}." if loot.present?
+      end
       result.join("\n")
     end
 
@@ -49,16 +51,12 @@ module CukeCrawler
     end
 
     def description
-      if death?
-        "a deadly pit of venomous spiders"
-      else
-        "a #{ambience} room"
-      end
+      "a #{ambience} room"
     end
 
     def exits
       exits = @connections.map do |direction, connection|
-        "#{direction} #{connection.view(direction)}"
+        "#{direction.to_s.bold_words} #{connection.view(direction)}"
       end
 
       if exits.size > 1
@@ -80,8 +78,12 @@ module CukeCrawler
       @connections[direction.to_sym].exits[direction.to_sym]
     end
 
-    def deadly?
+    def self.deadly?
       false
+    end
+
+    def deadly?
+      self.class.deadly?
     end
 
     def ambience
