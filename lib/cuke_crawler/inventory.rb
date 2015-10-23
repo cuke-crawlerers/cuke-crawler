@@ -5,7 +5,7 @@ module CukeCrawler
     end
 
     def look
-      "You are carrying #{to_sentence(map(&:description))}."
+      "You are carrying #{map(&:description).to_sentence}."
     end
 
     alias :drop :delete
