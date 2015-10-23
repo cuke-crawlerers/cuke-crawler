@@ -6,7 +6,7 @@ module CukeCrawler
     attr_reader :name, :options
 
     def initialize(name = nil, options = {})
-      @name = (name || PleasantLawyer.number_to_words(0).join(" ")).titleize
+      @name = (name || PleasantLawyer.number_to_words(todays_dungeon).join(" ")).titleize
       @random = Random.new(PleasantLawyer.convert(@name.downcase))
       @options = options
       @locations = generate_maze
@@ -159,6 +159,10 @@ module CukeCrawler
       pathfinder = Pathfinder.new(entrance) { |location| location == path_goal }
 
       pathfinder.path || fail("I couldn't generate any critical success paths to #{path_goal}")
+    end
+
+    def todays_dungeon
+      (Date.today - Date.parse("2015-10-22")).to_i
     end
   end
 end

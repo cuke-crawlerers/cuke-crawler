@@ -1,4 +1,6 @@
-Given(/^I am at the entrance to the (\w+ \w+) dungeon$/) do |name|
+Given(/^I am at the entrance to the (\w+ \w+ |)dungeon$/) do |name|
+  name = name.strip
+  name = nil if name.empty?
   @dungeon = CukeCrawler::Dungeon.generate(name)
   @adventurer = CukeCrawler::Adventurer.new(@dungeon)
   @started = true
