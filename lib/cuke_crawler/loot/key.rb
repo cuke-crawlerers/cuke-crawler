@@ -5,7 +5,7 @@ module CukeCrawler
     end
 
     def description
-      "a small iron key"
+      "a small iron #{name.bold_words}"
     end
   end
 end
