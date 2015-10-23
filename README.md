@@ -1,10 +1,10 @@
-![](https://github.com/fauxparse/cuke-crawler/blob/master/cuke.png)
+![Cuke Crawler](https://github.com/fauxparse/cuke-crawler/blob/master/cuke.png)
 
 [![Build Status](https://travis-ci.org/cuke-crawlerers/cuke-crawler.svg?branch=master)](https://travis-ci.org/cuke-crawlerers/cuke-crawler)
 
 # How to play
 
-Create a new `.feature` in `features/`:
+Create a new `.feature` in `features/`, and run with `cucumber --format DungeonMaster`:
 
 ```
 Feature: A quest
@@ -19,5 +19,7 @@ Feature: A quest
 ```
 
 Fill in the `...` to find the golden cucumber and emerge from the dungeon victorious!
+
+![Sample steps](https://github.com/fauxparse/cuke-crawler/blob/master/sample.png)
 
 Every day, there is a new dungeon to complete, each named with a new Pleasant Lawyer name.
