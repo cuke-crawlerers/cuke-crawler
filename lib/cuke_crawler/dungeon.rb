@@ -139,8 +139,14 @@ module CukeCrawler
 
       replace_location(
         unnecessary_locations.sample(random: @random),
-        Location.factory(self, klass: Location::Trap)
+        Location.factory(self, klass: random_trap)
       )
+    end
+
+    TRAPS = [Location::Trap, Location::Volcano]
+
+    def random_trap
+      TRAPS[@random.rand(TRAPS.length) + 1]
     end
 
     def replace_location(location, another)
