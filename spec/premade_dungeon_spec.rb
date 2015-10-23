@@ -14,6 +14,9 @@ describe CukeCrawler::Dungeon do
 
     context "when running the dungeon" do
       before do
+        adventurer.go(:east)
+        adventurer.inventory << adventurer.location.loot.first
+        adventurer.go(:west)
         adventurer.go(:north)
         adventurer.go(:west)
       end
