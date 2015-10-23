@@ -35,9 +35,9 @@ module CukeCrawler
       when 0
         "nothing"
       when 1, 2
-        arr.join(" and ")
+        arr.map(&:bold_words).join(" and ")
       else
-        arr.first(arr.length - 2).join(", ") + ", and " . arr.last
+        arr.first(arr.length - 2).map(&:bold_words).join(", ") + ", and " . arr.last.bold_words
       end
     end
   end

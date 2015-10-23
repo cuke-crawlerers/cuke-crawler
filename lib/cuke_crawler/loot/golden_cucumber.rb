@@ -5,7 +5,7 @@ module CukeCrawler
       end
 
       def description
-        "a magnificent golden cucumber"
+        "a magnificent golden #{name.bold_words}"
       end
 
       def name

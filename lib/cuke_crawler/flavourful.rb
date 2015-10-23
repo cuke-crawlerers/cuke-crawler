@@ -16,7 +16,7 @@ module CukeCrawler
       result = []
       line = []
       words.each do |w|
-        if (line.join(" ") + " #{w}").length > max_line_length
+        if (line.join(" ") + " #{w}").uncolorize.length > max_line_length
           result << line.join(" ")
           line = []
         end
